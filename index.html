@@ -1,0 +1,179 @@
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lunar DEM Generator</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .box {
+            text-align: center;
+        }
+        img {
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid #ccc;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background-color: #101820;
+            color: white;
+        }
+        input[type="file"] {
+            margin: 20px;
+        }
+        img {
+            margin: 20px;
+            max-height: 300px;
+            border: 2px solid #fff;
+        }
+        .button {
+            padding: 10px 25px;
+            background-color: #f26b38;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Lunar DEM Generator (Photoclinometry + ML Refinement)</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <button type="submit" class="button">Generate DEM</button>
+</form>
+
+{% if gray_dem %}
+<h3>Base DEM (Photoclinometry)</h3>
+<div class="grid">
+    <div class="box">
+        <h4>Grayscale DEM</h4>
+        <img src="{{ url_for('static', filename=gray_dem) }}">
+    </div>
+    <div class="box">
+        <h4>Color DEM</h4>
+        <img src="{{ url_for('static', filename=color_dem) }}">
+    </div>
+</div>
+{% endif %}
+
+{% if ml_gray %}
+<h3>ML Refined DEM (Random Forest)</h3>
+<div class="grid">
+    <div class="box">
+        <h4>ML Grayscale DEM</h4>
+        <img src="{{ url_for('static', filename=ml_gray) }}">
+    </div>
+    <div class="box">
+        <h4>ML Color DEM</h4>
+        <img src="{{ url_for('static', filename=ml_color) }}">
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lunar DEM Generator</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 30px;
+        background-color: #101820;
+        color: white;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;               /* 🔽 reduced gap */
+        margin-top: 20px;
+        justify-items: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .grid::before {
+        content: "";
+        position: absolute;
+        height: 90%;
+        width: 2px;
+        background-color: #ffffff;
+        left: 50%;
+        top: 5%;
+        opacity: 0.6;           /* subtle divider */
+    }
+
+    .box {
+        text-align: center;
+    }
+
+    img {
+        width: 100%;
+        max-width: 350px;
+        max-height: 300px;
+        border: 2px solid #ffffff;
+        margin-top: 10px;
+    }
+
+    input[type="file"] {
+        margin: 20px;
+    }
+
+    .button {
+        padding: 10px 25px;
+        background-color: #f26b38;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h2>Lunar DEM Generator (ML-Refined)</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <br>
+    <button type="submit" class="button">Generate DEM</button>
+</form>
+
+{% if input_image %}
+<h3>Uploaded Input Image</h3>
+<img src="{{ url_for('static', filename=input_image) }}">
+{% endif %}
+
+{% if ml_gray %}
+<h3>ML Refined DEM Outputs</h3>
+<div class="grid">
+    <div class="box">
+        <h4>ML Grayscale DEM</h4>
+        <img src="{{ url_for('static', filename=ml_gray) }}">
+    </div>
+
+    <div class="box">
+        <h4>ML Color-Mapped DEM</h4>
+        <img src="{{ url_for('static', filename=ml_color) }}">
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>
