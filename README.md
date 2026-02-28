@@ -66,6 +66,10 @@ Lunar-DEM-Project/
 │   ├── input/
 │   └── output/
 │
+├── utils/
+│   ├── height_and_path_demo.py
+│   └── visualization.py
+│
 ├── templates/
 │   └── index.html
 │
